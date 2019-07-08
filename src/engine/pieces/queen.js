@@ -12,15 +12,28 @@ export default class Queen extends Piece {
 
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
+        const directionVectors = [{row:0,  col:-1},
+                                  {row:0,  col:1},
+                                  {row:1,  col:0},
+                                  {row:-1, col:0},
+                                  {row:1,  col:-1},
+                                  {row:1,  col:1},
+                                  {row:-1, col:-1},
+                                  {row:-1, col:1}];
+        
+        for (const direction of directionVectors) {
+            let currentSquare = initialPosition;
+            
+            for (let i = 0; i < board.board.length; i++) {
+                currentSquare = currentSquare.nextSquare(direction);
 
-        for (let i = 0; i < board.board.length; i++) {
-            possibleMoves.push(new Square(i, currentCol))
-            possibleMoves.push(new Square(currentRow, i))
-
-            possibleMoves.push(new Square(currentRow +i, currentCol +i));
-            possibleMoves.push(new Square(currentRow -i, currentCol +i));
-            possibleMoves.push(new Square(currentRow +i, currentCol -i));
-            possibleMoves.push(new Square(currentRow -i, currentCol -i));
+                if (board.getPiece(currentSquare) !== undefined) {
+                    break;
+                } else {
+                    possibleMoves.push(currentSquare);
+                    
+                }                
+            }
         }
     
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
