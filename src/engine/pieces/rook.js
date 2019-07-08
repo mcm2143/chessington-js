@@ -13,8 +13,8 @@ export default class Rook extends Piece {
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        const directionVectors = [{row:0,  col:1},
-                                  {row:0,  col:-1},
+        const directionVectors = [{row:0,  col:-1},
+                                  {row:0,  col:1},
                                   {row:1,  col:0},
                                   {row:-1, col:0}];
         
@@ -23,13 +23,13 @@ export default class Rook extends Piece {
             
             for (let i = 0; i < board.board.length; i++) {
                 currentSquare = currentSquare.nextSquare(direction);
-                console.log(board.getPiece(currentSquare));
-                
+
                 if (board.getPiece(currentSquare) !== undefined) {
                     break;
                 } else {
                     possibleMoves.push(currentSquare);
-                }
+                    
+                }                
             }
         }
 

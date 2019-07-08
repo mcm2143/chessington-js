@@ -15,7 +15,11 @@ export default class Square {
     nextSquare (direction) {
         const nextRow = this.row + direction.row;
         const nextCol = this.col + direction.col;
-        return new Square(nextRow, nextCol);
+        //if (nextRow < 8 && nextRow >=0 && nextCol < 8 && nextCol >=0) {
+            return new Square(nextRow, nextCol);
+        //}
+    //return undefined;
+            
     }
 
     toString() {

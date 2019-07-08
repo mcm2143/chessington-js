@@ -21,6 +21,9 @@ export default class Board {
     }
 
     getPiece(square) {
+        if (this.board[square.row] === undefined) {
+            return undefined
+        }
         return this.board[square.row][square.col];
     }
 
