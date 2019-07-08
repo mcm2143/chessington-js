@@ -1,5 +1,6 @@
 import Piece from './piece';
 import Square from '../square';
+import King from './king';
 
 export default class Knight extends Piece {
     constructor(player) {
@@ -13,14 +14,29 @@ export default class Knight extends Piece {
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        possibleMoves.push(new Square(currentRow -1, currentCol -2));
-        possibleMoves.push(new Square(currentRow -1, currentCol +2));
-        possibleMoves.push(new Square(currentRow +1, currentCol -2));
-        possibleMoves.push(new Square(currentRow +1, currentCol +2));
-        possibleMoves.push(new Square(currentRow -2, currentCol -1));
-        possibleMoves.push(new Square(currentRow -2, currentCol +1));
-        possibleMoves.push(new Square(currentRow +2, currentCol -1));
-        possibleMoves.push(new Square(currentRow +2, currentCol +1));
+        const directionVectors = [{row:-1, col:-2},
+                                  {row:-1, col:+2},
+                                  {row:+1, col:-2},
+                                  {row:+1, col:+2},
+                                  {row:-2, col:-1},
+                                  {row:-2, col:+1},
+                                  {row:+2, col:-1},
+                                  {row:+2, col:+1}];
+        
+        for (const direction of directionVectors) {
+            let currentSquare = initialPosition.nextSquare(direction);
+    
+            let otherPiece = board.getPiece(currentSquare);
+            if (otherPiece !== undefined) {
+                if (this.player !== otherPiece.player) {
+                    if (!(otherPiece instanceof King)) {
+                        possibleMoves.push(currentSquare);
+                    }
+                }
+            } else {
+                possibleMoves.push(currentSquare);
+            }
+        }
     
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
 
