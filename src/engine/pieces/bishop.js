@@ -1,5 +1,7 @@
 import Piece from './piece';
 import Square from '../square';
+import King from './king';
+
 
 export default class Bishop extends Piece {
     constructor(player) {
@@ -24,12 +26,18 @@ export default class Bishop extends Piece {
             for (let i = 0; i < board.board.length; i++) {
                 currentSquare = currentSquare.nextSquare(direction);
 
-                if (board.getPiece(currentSquare) !== undefined) {
+                let otherPiece = board.getPiece(currentSquare);
+                if (otherPiece !== undefined) {
+                    if (this.player !== otherPiece.player) {
+                        if (!(otherPiece instanceof King)) {
+                            possibleMoves.push(currentSquare);
+                        }
+                    }
                     break;
                 } else {
                     possibleMoves.push(currentSquare);
-
-                }                
+                    
+                }               
             }
         }
 
