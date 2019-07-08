@@ -8,20 +8,16 @@ export default class Rook extends Piece {
 
     getAvailableMoves(board) {
         const initialPosition = board.findPiece(this);
-        const availableMoves  = [];
+        const possibleMoves  = [];
 
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        for (let i = 0; i < 8; i++) {
-            if (i !== currentRow) {
-                availableMoves.push(new Square(i, currentCol))
-            }
-            if (i !== currentCol) {
-                availableMoves.push(new Square(currentRow, i))
-            }
+        for (let i = 0; i < board.board.length; i++) {
+            possibleMoves.push(new Square(i, currentCol))
+            possibleMoves.push(new Square(currentRow, i))
         }
-        
+        const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
         return availableMoves;
     }
 }

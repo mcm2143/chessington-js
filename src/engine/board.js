@@ -43,4 +43,18 @@ export default class Board {
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
         }
     }
+
+    removeInvalidMoves (initialPosition, possibleMoves) {
+        let currentRow = initialPosition.row
+        let currentCol = initialPosition.col
+    
+        const availableMoves = possibleMoves.filter(square => (square.row < this.board.length
+                                                            && square.row >=0
+                                                            && square.col < this.board.length 
+                                                            && square.col >=0
+                                                            && (square.row != currentRow
+                                                                || square.col != currentCol)))
+                                                                
+        return availableMoves;                                                  
+    }
 }

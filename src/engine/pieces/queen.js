@@ -13,7 +13,7 @@ export default class Queen extends Piece {
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < board.board.length; i++) {
             possibleMoves.push(new Square(i, currentCol))
             possibleMoves.push(new Square(currentRow, i))
 
@@ -23,12 +23,7 @@ export default class Queen extends Piece {
             possibleMoves.push(new Square(currentRow -i, currentCol -i));
         }
     
-        const availableMoves = possibleMoves.filter(square => (square.row < 8 
-                                                            && square.row >=0
-                                                            && square.col < 8 
-                                                            && square.col >=0
-                                                            && (square.row != currentRow
-                                                                || square.col != currentCol)))
+        const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
 
         return availableMoves;
     }

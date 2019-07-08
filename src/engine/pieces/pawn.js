@@ -23,7 +23,7 @@ export default class Pawn extends Piece {
 
         } else {
             availableMoves.push(new Square(currentRow -1, currentCol))
-            if (currentRow === 6) {
+            if (currentRow === board.board.length - 2) {
                 availableMoves.push(new Square(currentRow -2, currentCol))
             }
         }
