@@ -12,16 +12,23 @@ export default class Pawn extends Piece {
         const initialPosition = board.findPiece(this);
         const availableMoves  = [];
 
-        let availableRow = initialPosition.row
-        let availableCol = initialPosition.col
+        let currentRow = initialPosition.row
+        let currentCol = initialPosition.col
 
         if (this.player === Player.WHITE) {
-            availableRow += 1;
+            availableMoves.push(new Square(currentRow +1, currentCol))
+            if (currentRow === 1) {
+                availableMoves.push(new Square(currentRow +2, currentCol))
+            }
+
         } else {
-            availableRow -= 1;
+            availableMoves.push(new Square(currentRow -1, currentCol))
+            if (currentRow === 6) {
+                availableMoves.push(new Square(currentRow -2, currentCol))
+            }
         }
 
-        availableMoves.push(new Square(availableRow, availableCol))
+        
         return availableMoves;
     }
 }
