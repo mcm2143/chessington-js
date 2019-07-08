@@ -13,11 +13,24 @@ export default class Bishop extends Piece {
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        for (let i = 1; i < board.board.length; i++) {
-            possibleMoves.push(new Square(currentRow +i, currentCol +i));
-            possibleMoves.push(new Square(currentRow -i, currentCol +i));
-            possibleMoves.push(new Square(currentRow +i, currentCol -i));
-            possibleMoves.push(new Square(currentRow -i, currentCol -i));
+        const directionVectors = [{row:1,  col:-1},
+                                  {row:1,  col:1},
+                                  {row:-1, col:-1},
+                                  {row:-1, col:1}];
+
+        for (const direction of directionVectors) {
+            let currentSquare = initialPosition;
+
+            for (let i = 0; i < board.board.length; i++) {
+                currentSquare = currentSquare.nextSquare(direction);
+
+                if (board.getPiece(currentSquare) !== undefined) {
+                    break;
+                } else {
+                    possibleMoves.push(currentSquare);
+
+                }                
+            }
         }
 
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
