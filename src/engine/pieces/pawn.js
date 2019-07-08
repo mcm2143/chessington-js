@@ -12,23 +12,27 @@ export default class Pawn extends Piece {
         const initialPosition = board.findPiece(this);
         const availableMoves  = [];
 
+        const pawnDirection = +(this.player === Player.WHITE)*2 -1;
+
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        if (this.player === Player.WHITE) {
-            availableMoves.push(new Square(currentRow +1, currentCol))
-            if (currentRow === 1) {
-                availableMoves.push(new Square(currentRow +2, currentCol))
-            }
-
+        const forwardOneSquare = new Square(currentRow +1*pawnDirection, currentCol)
+        if (board.getPiece(forwardOneSquare) !== undefined) {
+            return availableMoves;
         } else {
-            availableMoves.push(new Square(currentRow -1, currentCol))
-            if (currentRow === board.board.length - 2) {
-                availableMoves.push(new Square(currentRow -2, currentCol))
-            }
+            availableMoves.push(forwardOneSquare)
         }
 
-        
+        if ((currentRow === 1 && pawnDirection === 1) || (currentRow === board.board.length -2 && pawnDirection === -1)) {
+            const forwardTwoSquare = new Square(currentRow +2*pawnDirection, currentCol)
+            
+            if (board.getPiece(forwardTwoSquare) === undefined) {
+                availableMoves.push(forwardTwoSquare)
+            }
+            
+        }
+
         return availableMoves;
     }
 }
