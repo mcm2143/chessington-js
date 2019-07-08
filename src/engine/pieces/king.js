@@ -12,16 +12,29 @@ export default class King extends Piece {
 
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
-
-        possibleMoves.push(new Square(currentRow +1, currentCol));
-        possibleMoves.push(new Square(currentRow -1, currentCol));
-        possibleMoves.push(new Square(currentRow, currentCol +1));
-        possibleMoves.push(new Square(currentRow, currentCol -1));
-
-        possibleMoves.push(new Square(currentRow +1, currentCol +1));
-        possibleMoves.push(new Square(currentRow -1, currentCol +1));
-        possibleMoves.push(new Square(currentRow +1, currentCol -1));
-        possibleMoves.push(new Square(currentRow -1, currentCol -1));
+        const directionVectors = [{row:0,  col:-1},
+                                  {row:0,  col:1},
+                                  {row:1,  col:0},
+                                  {row:-1, col:0},
+                                  {row:1,  col:-1},
+                                  {row:1,  col:1},
+                                  {row:-1, col:-1},
+                                  {row:-1, col:1}];
+        
+        for (const direction of directionVectors) {
+            let currentSquare = initialPosition.nextSquare(direction);
+            
+            let otherPiece = board.getPiece(currentSquare);
+            if (otherPiece !== undefined) {
+                if (this.player !== otherPiece.player) {
+                    if (!(otherPiece instanceof King)) {
+                        possibleMoves.push(currentSquare);
+                    }
+                }
+            } else {
+                possibleMoves.push(currentSquare);
+            }               
+        }
     
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
 
