@@ -11,7 +11,7 @@ export default class Pawn extends Piece {
     getAvailableMoves(board) {
         //const boardArray
         const initialPosition = board.findPiece(this);
-        const possibleMoves  = [];
+        const possibleMoves   = [];
 
         const pawnDirection = +(this.player === Player.WHITE)*2 -1;
 
@@ -20,18 +20,15 @@ export default class Pawn extends Piece {
 
         // moving pawn forward
         const forwardOneSquare = new Square(currentRow +1*pawnDirection, currentCol)
-        if (board.getPiece(forwardOneSquare) !== undefined) {
-            return possibleMoves;
-        } else {
+        if (board.getPiece(forwardOneSquare) === undefined) {
             possibleMoves.push(forwardOneSquare)
-        }
-
-        // moving pawn forward two at start
-        if ((currentRow === 1 && pawnDirection === 1) || (currentRow === board.board.length -2 && pawnDirection === -1)) {
-            const forwardTwoSquare = new Square(currentRow +2*pawnDirection, currentCol)
             
-            if (board.getPiece(forwardTwoSquare) === undefined) {
-                possibleMoves.push(forwardTwoSquare)
+            if ((currentRow === 1 && pawnDirection === 1) || (currentRow === board.board.length -2 && pawnDirection === -1)) {
+                const forwardTwoSquare = new Square(currentRow +2*pawnDirection, currentCol)
+                
+                if (board.getPiece(forwardTwoSquare) === undefined) {
+                    possibleMoves.push(forwardTwoSquare)
+                }
             }
         }
 

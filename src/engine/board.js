@@ -1,6 +1,7 @@
 import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
+import King from './pieces/king';
 
 export default class Board {
     constructor(currentPlayer) {
@@ -59,5 +60,31 @@ export default class Board {
                                                                 || square.col != currentCol)))
                                                                 
         return availableMoves;                                                  
+    }
+
+    getPossibleMoves (player, initialPosition, directionVectors, distance) {
+        const possibleMoves = [];
+
+        for (const direction of directionVectors) {
+            let currentSquare = initialPosition;
+            
+            for (let i = 0; i < distance; i++) {
+                currentSquare = currentSquare.nextSquare(direction);
+
+                let otherPiece = this.getPiece(currentSquare);
+                if (otherPiece !== undefined) {
+                    if (player !== otherPiece.player) {
+                        if (!(otherPiece instanceof King)) {
+                            possibleMoves.push(currentSquare);
+                        }
+                    }
+                    break;
+                } else {
+                    possibleMoves.push(currentSquare);
+                    
+                }               
+            }
+        }
+        return possibleMoves;
     }
 }

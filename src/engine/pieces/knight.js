@@ -9,10 +9,6 @@ export default class Knight extends Piece {
 
     getAvailableMoves(board) {
         const initialPosition = board.findPiece(this);
-        const possibleMoves  = [];
-
-        let currentRow = initialPosition.row
-        let currentCol = initialPosition.col
 
         const directionVectors = [{row:-1, col:-2},
                                   {row:-1, col:+2},
@@ -23,21 +19,8 @@ export default class Knight extends Piece {
                                   {row:+2, col:-1},
                                   {row:+2, col:+1}];
         
-        for (const direction of directionVectors) {
-            let currentSquare = initialPosition.nextSquare(direction);
-    
-            let otherPiece = board.getPiece(currentSquare);
-            if (otherPiece !== undefined) {
-                if (this.player !== otherPiece.player) {
-                    if (!(otherPiece instanceof King)) {
-                        possibleMoves.push(currentSquare);
-                    }
-                }
-            } else {
-                possibleMoves.push(currentSquare);
-            }
-        }
-    
+        const player = this.player;
+        const possibleMoves  = board.getPossibleMoves(player, initialPosition, directionVectors, 1);
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
 
         return availableMoves;
