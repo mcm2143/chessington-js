@@ -27,7 +27,7 @@ export default class King extends Piece {
             
             case 'Right':
                 castleSquares = [new Square(kingRow, 5),
-                                new Square(kingRow, 6)];
+                                 new Square(kingRow, 6)];
                 rook = board.getPiece(new Square(kingRow, 7));
                 break;
         }
@@ -67,5 +67,28 @@ export default class King extends Piece {
         const availableMoves  = board.getAvailableMoves(player, initialPosition, directionVectors, 1);        
 
         return availableMoves;
+    }
+
+    moveTo(board, newSquare) {
+        const initialPosition = board.findPiece(this);
+        board.movePiece(initialPosition, newSquare);
+        this.everMoved = true;
+
+        if(Math.abs(newSquare.col - initialPosition.col) == 2) {
+            let oldRookSquare;
+            let newRookSquare;
+            board.currentPlayer = this.player;
+
+            if (newSquare.col > initialPosition.col) {
+                oldRookSquare = new Square(initialPosition.row, 7);
+                newRookSquare = new Square(initialPosition.row, 5);
+            } else {
+                oldRookSquare = new Square(initialPosition.row, 0);
+                newRookSquare = new Square(initialPosition.row, 3);
+            }
+
+            const rook = board.getPiece(oldRookSquare);
+            rook.moveTo(board, newRookSquare);
+        }
     }
 }

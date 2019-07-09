@@ -40,7 +40,7 @@ function pieceToPieceString(piece) {
     }
 }
 
-function boardToPositionObject() {
+export function boardToPositionObject() {
     let position = {};
     for (let row = 0; row < GameSettings.BOARD_SIZE; row++) {
         for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
@@ -91,17 +91,17 @@ function boardInStartingPosition() {
     }
 
     for (let i of [1, 6]) {
-        board.setPiece(Square.at(0, i), new Knight(Player.WHITE));
-        board.setPiece(Square.at(7, i), new Knight(Player.BLACK));
+        board.setPiece(Square.at(3, i), new Knight(Player.WHITE));
+        board.setPiece(Square.at(4, i), new Knight(Player.BLACK));
     }
 
     for (let i of [2, 5]) {
-        board.setPiece(Square.at(0, i), new Bishop(Player.WHITE));
-        board.setPiece(Square.at(7, i), new Bishop(Player.BLACK));
+        board.setPiece(Square.at(3, i), new Bishop(Player.WHITE));
+        board.setPiece(Square.at(4, i), new Bishop(Player.BLACK));
     }
 
-    board.setPiece(Square.at(0, 3), new Queen(Player.WHITE));
-    board.setPiece(Square.at(7, 3), new Queen(Player.BLACK));
+    board.setPiece(Square.at(3, 3), new Queen(Player.WHITE));
+    board.setPiece(Square.at(4, 3), new Queen(Player.BLACK));
 
     board.setPiece(Square.at(0, 4), new King(Player.WHITE));
     board.setPiece(Square.at(7, 4), new King(Player.BLACK));

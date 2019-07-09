@@ -1,5 +1,3 @@
-
-
 export default class Piece {
     constructor(player) {
         this.player = player;
@@ -11,6 +9,4 @@ export default class Piece {
         board.movePiece(currentSquare, newSquare);
         this.everMoved = true;
     }
-
-    
 }
