@@ -7,7 +7,6 @@ export default class Queen extends Piece {
 
     getAvailableMoves(board) {
         const initialPosition = board.findPiece(this);
-        
 
         const directionVectors = [{row:0,  col:-1},
                                   {row:0,  col:1},
@@ -19,8 +18,7 @@ export default class Queen extends Piece {
                                   {row:-1, col:1}];
         
         const player = this.player;
-        const possibleMoves  = board.getPossibleMoves(player, initialPosition, directionVectors, 8);
-        const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
+        const availableMoves  = board.getAvailableMoves(player, initialPosition, directionVectors, 8);
 
         return availableMoves;
     }

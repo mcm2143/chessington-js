@@ -1,6 +1,4 @@
 import Piece from './piece';
-import Square from '../square';
-import King from './king';
 
 export default class Rook extends Piece {
     constructor(player) {
@@ -16,8 +14,8 @@ export default class Rook extends Piece {
                                   {row:-1, col:0}];
         
         const player = this.player;
-        const possibleMoves  = board.getPossibleMoves(player, initialPosition, directionVectors, 8);
-        const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
+        const availableMoves  = board.getAvailableMoves(player, initialPosition, directionVectors, 8);
+
         return availableMoves;
     }
 }

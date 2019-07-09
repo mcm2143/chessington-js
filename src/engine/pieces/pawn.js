@@ -9,7 +9,6 @@ export default class Pawn extends Piece {
     }
 
     getAvailableMoves(board) {
-        //const boardArray
         const initialPosition = board.findPiece(this);
         const possibleMoves   = [];
 
@@ -18,13 +17,12 @@ export default class Pawn extends Piece {
         let currentRow = initialPosition.row
         let currentCol = initialPosition.col
 
-        // moving pawn forward
-        const forwardOneSquare = new Square(currentRow +1*pawnDirection, currentCol)
+        const forwardOneSquare = new Square(currentRow + 1*pawnDirection, currentCol)
         if (board.getPiece(forwardOneSquare) === undefined) {
             possibleMoves.push(forwardOneSquare)
             
-            if ((currentRow === 1 && pawnDirection === 1) || (currentRow === board.board.length -2 && pawnDirection === -1)) {
-                const forwardTwoSquare = new Square(currentRow +2*pawnDirection, currentCol)
+            if ((currentRow === 1 && pawnDirection === 1) || (currentRow === board.board.length-2 && pawnDirection === -1)) {
+                const forwardTwoSquare = new Square(currentRow + 2*pawnDirection, currentCol)
                 
                 if (board.getPiece(forwardTwoSquare) === undefined) {
                     possibleMoves.push(forwardTwoSquare)
@@ -32,23 +30,18 @@ export default class Pawn extends Piece {
             }
         }
 
-        // take pieces diagonally
         for (let direction of [-1, 1]) {
-            let currentSquare  = new Square (currentRow +1*pawnDirection, currentCol + direction)
+            let currentSquare  = new Square (currentRow + 1*pawnDirection, currentCol + direction)
             let otherPiece = board.getPiece(currentSquare);
             
             if (otherPiece !== undefined) {
-                if (this.player !== otherPiece.player) {
-                    if (!(otherPiece instanceof King)) {
-                        possibleMoves.push(currentSquare);
-                    }
+                if ((this.player !== otherPiece.player) && !(otherPiece instanceof King)) {
+                    possibleMoves.push(currentSquare);
                 }
             }               
         }
 
-
         const availableMoves = board.removeInvalidMoves(initialPosition, possibleMoves);
-
         return availableMoves;
     }
 }

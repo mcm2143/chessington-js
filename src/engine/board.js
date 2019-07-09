@@ -62,29 +62,27 @@ export default class Board {
         return availableMoves;                                                  
     }
 
-    getPossibleMoves (player, initialPosition, directionVectors, distance) {
+    getAvailableMoves (player, initialPosition, directionVectors, distance) {
         const possibleMoves = [];
 
         for (const direction of directionVectors) {
             let currentSquare = initialPosition;
             
             for (let i = 0; i < distance; i++) {
-                currentSquare = currentSquare.nextSquare(direction);
-
+                currentSquare  = currentSquare.nextSquare(direction);
                 let otherPiece = this.getPiece(currentSquare);
+                
                 if (otherPiece !== undefined) {
-                    if (player !== otherPiece.player) {
-                        if (!(otherPiece instanceof King)) {
-                            possibleMoves.push(currentSquare);
-                        }
+                    if ((player !== otherPiece.player) && !(otherPiece instanceof King)) {
+                        possibleMoves.push(currentSquare);
                     }
                     break;
                 } else {
                     possibleMoves.push(currentSquare);
-                    
                 }               
             }
         }
-        return possibleMoves;
+        const availableMoves = this.removeInvalidMoves(initialPosition, possibleMoves)
+        return availableMoves;
     }
 }
